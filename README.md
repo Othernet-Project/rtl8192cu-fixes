@@ -1,15 +1,29 @@
+[![Build Status](https://travis-ci.org/pvaret/rtl8192cu-fixes.svg?branch=master)](https://travis-ci.org/pvaret/rtl8192cu-fixes)
+
 This is a repackaging of Realtek's own 8192CU USB WiFi driver for Ubuntu 13.10 and later.
+
+!! This driver is DEPRECATED !!
+===============================
+
+The new `rtl8xxxu` driver initially introduced in kernel 4.4 works pretty well these days, and you almost certainly should prefer it to this repository.
+
+If `rtl8xxxu` gives you problems, try troubleshooting it before installing this driver. Known things to look for are:
+  - Some devices require that power management be disabled in NetworkManager. Follow the instructions further down to disable power management in NetworkManager.
+  - Make sure to blacklist the older `rtl8192cu` driver, which tends to be loaded by default otherwise.
 
 Compatibility
 =============
 
 These devices are known to work with this driver:
 - ASUSTek USB-N13 **rev. B1** (0b05:17ab)
-- Belkin N300
+- Belkin N300 (050d:2103)
+- D-Link DWA-121 802.11n Wireless N 150 Pico Adapter [RTL8188CUS]
 - Edimax EW-7811Un (7392:7811)
 - Kootek KT-RPWF (0bda:8176)
+- OurLink 150M 802.11n (0bda:8176)
+- TP-Link TL-WN821N**v4** (0bda:8178)
 - TP-Link TL-WN822N (0bda:8178)
-- TP-Link TL-WN823N
+- TP-Link TL-WN823N (only models that use the rtl8192cu chip)
 - TRENDnet TEW-648UBM N150
 
 These devices are known not to be supported:
@@ -65,6 +79,8 @@ There is a known issue with power management on some hardware. If your WiFi conn
     sudo cp ./rtl8192cu-fixes/8192cu-disable-power-management.conf /etc/modprobe.d/
 
 And then reboot.
+
+Sometimes Network Manager also sets a device in a power-saving mode where it doesn't use enough power to connect. You can fix it by editing `/etc/NetworkManager/conf.d/default-wifi-powersave-on.conf` and setting `wifi.powersave` to 2. And then reboot.
 
 Current status
 ==============
